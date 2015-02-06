@@ -1,0 +1,80 @@
+{
+  "nodes" : [
+    {
+      "id" : 1,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        5
+      ],
+      "starting_node" : "player_1"
+    },
+    {
+      "id" : 2,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        6
+      ],
+      "starting_node" : "player_2"
+    },
+    {
+      "id" : 3,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        7
+      ],
+      "starting_node" : "player_3"
+    },
+    {
+      "id" : 4,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        8
+      ],
+      "starting_node" : "player_4"
+    },
+    {
+      "id" : 5,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        1,
+        6,
+        7
+      ]
+    },
+    {
+      "id" : 6,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        2,
+        5,
+        7
+      ]
+    },
+    {
+      "id" : 7,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        3,
+        6,
+        8
+      ]
+    },
+    {
+      "id" : 8,
+      "owner" : "none",
+      "points" : "0",
+      "connections" : [
+        4,
+        6,
+        7
+      ]
+    }
+  ]
+}
