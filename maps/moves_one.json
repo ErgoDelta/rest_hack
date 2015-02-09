@@ -1,0 +1,28 @@
+{
+  "moves" : [
+    {
+      "node_from" : 1,
+      "node_to" : 5,
+      "owner" : "player_1",
+      "points" : "10",
+    },
+    {
+      "node_from" : 2,
+      "node_to" : 6,
+      "owner" : "player_2",
+      "points" : "50",
+    },
+    {
+      "node_from" : 3,
+      "node_to" : 7,
+      "owner" : "player_3",
+      "points" : "40",
+    },
+    {
+      "node_from" : 4,
+      "node_to" : 8,
+      "owner" : "player_4",
+      "points" : "70",
+    },
+  ]
+}

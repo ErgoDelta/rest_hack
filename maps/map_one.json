@@ -2,8 +2,8 @@
   "nodes" : [
     {
       "id" : 1,
-      "owner" : "none",
-      "points" : "0",
+      "owner" : "player_1",
+      "points" : "100",
       "connections" : [
         5
       ],
@@ -11,8 +11,8 @@
     },
     {
       "id" : 2,
-      "owner" : "none",
-      "points" : "0",
+      "owner" : "player_2",
+      "points" : "100",
       "connections" : [
         6
       ],
@@ -20,8 +20,8 @@
     },
     {
       "id" : 3,
-      "owner" : "none",
-      "points" : "0",
+      "owner" : "player_3",
+      "points" : "100",
       "connections" : [
         7
       ],
@@ -29,8 +29,8 @@
     },
     {
       "id" : 4,
-      "owner" : "none",
-      "points" : "0",
+      "owner" : "player_4",
+      "points" : "100",
       "connections" : [
         8
       ],
