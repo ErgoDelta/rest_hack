@@ -18,17 +18,19 @@ namespace CuttingEdge
         int vertexStride = Marshal.SizeOf(typeof(Particle));
         public ParticleRenderer()
         {
-            for (int p = 0; p < 320; p++)
+            for (int p = 0; p < 100; p++)
             {
                 ushort parent = Count++;
-                particles[parent].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
+                //particles[parent].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
+                particles[parent].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f, 0, 1);
+
                 particles[parent].parent = ushort.MaxValue;
 
                 for (ushort c = 0; c < 200; c++)
                 {
                     ushort c2 = (ushort)(c + Count);
-                    //particles[c2].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
-                    particles[c2].Position = new Vector4(0, 0, 0, 1);
+                    particles[c2].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
+                    //particles[c2].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f,0, 1);
                     particles[c2].parent = parent;
                     //particles[parent].child = c2;
                     parent = c2;
@@ -92,7 +94,7 @@ namespace CuttingEdge
                         float e = elapsedTime * 10f;
                         particles[i].Position = (particles[i].Position + e * particles[particles[i].parent].Position) / (1.0f + e);
                     }
-                    size *= 0.99f;
+                    size *= 0.95f;
                     particles[i].Position.W = size;
                 }
             }
@@ -103,7 +105,7 @@ namespace CuttingEdge
 
             GL.Enable(EnableCap.PointSprite);
 
-            GL.PointSize(16);
+            GL.PointSize(64);
             GL.DrawArrays(PrimitiveType.Points, 0, Count);
         }
     }

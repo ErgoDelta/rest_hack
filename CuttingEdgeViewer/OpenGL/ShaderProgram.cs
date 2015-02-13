@@ -22,7 +22,7 @@ namespace CuttingEdge
             GL.ShaderSource(fragmentShaderID, fragmentShaderText);
             GL.CompileShader(fragmentShaderID);
             GL.GetShader(fragmentShaderID, ShaderParameter.CompileStatus, out status);
-            Debug.Assert(status == 1, "Shader Error: " + fragmentShaderName, GL.GetShaderInfoLog(vertexShaderID));
+            Debug.Assert(status == 1, "Shader Error: " + fragmentShaderName, GL.GetShaderInfoLog(fragmentShaderID));
 
             ID = GL.CreateProgram();
             GL.AttachShader(ID, vertexShaderID);

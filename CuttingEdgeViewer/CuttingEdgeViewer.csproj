@@ -47,6 +47,8 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpenGL\VertexBuffer.cs" />
+    <Compile Include="OpenGL\TriangleBuffer.cs" />
     <Compile Include="ParticleRenderer.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="Map.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Renderer\Triangle.cs" />
     <Compile Include="Renderer\Vertex.cs" />
     <Compile Include="Renderer\Renderer.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="Viewer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
