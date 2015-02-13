@@ -47,6 +47,8 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParticleRenderer.cs" />
+    <Compile Include="Particle.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="OpenGL\Mesh.cs" />
     <Compile Include="OpenGL\ShaderProgram.cs" />
@@ -63,6 +65,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="ParticleRenderer\Particle.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ParticleRenderer\Particle.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Renderer\Texture.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -75,6 +83,9 @@
     <Content Include="Textures\Circle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Textures\Particle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Textures\Unit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

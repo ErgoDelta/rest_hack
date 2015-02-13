@@ -31,19 +31,22 @@ namespace CuttingEdge
 
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.2f, 0.4f, 0.8f, 1.0f);
+            //GL.ClearColor(0.2f, 0.4f, 0.8f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit);
             SwapBuffers();
 
-            for (int i = 0; i < 10000; i++)
-            {
-                units.Add(new Unit());
-            }
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    units.Add(new Unit());
+            //}
 
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+            ParticleRenderer = new ParticleRenderer();
         }
         List<Unit> units = new List<Unit>();
+        ParticleRenderer ParticleRenderer;
 
         protected override void OnUnload(EventArgs e)
         {
@@ -62,10 +65,13 @@ namespace CuttingEdge
 
             Renderer.Time = time;
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            foreach (Unit unit in units)
-            {
-                unit.Draw();
-            }
+            //foreach (Unit unit in units)
+            //{
+            //    unit.Draw();
+            //}
+
+            ParticleRenderer.Draw((float)e.Time);
+
             SwapBuffers();
         }
 

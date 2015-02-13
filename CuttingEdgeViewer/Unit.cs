@@ -27,8 +27,8 @@ namespace CuttingEdge
         static Random random = new Random();
         public Unit()
         {
-            Targets.Add(new Vector3(-40, 500, 0));
-            Targets.Add(new Vector3(40, 500, 0));
+            Targets.Add(new Vector3(400, 500, 0));
+            Targets.Add(new Vector3(400, 500, 0));
             Targets.Add(new Vector3(400, 500, 0));
             Targets.Add(new Vector3(random.Next(1280), random.Next(720), 0));
 
