@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace CuttingEdge
@@ -7,8 +8,9 @@ namespace CuttingEdge
     public struct Particle
     {
         public Vector4 Position;
-        public ushort parent;
-        public ushort child;
-        //public Vector4 Color;
+        //public byte Red;
+        //public byte Green;
+        //public byte Blue;
+        //public byte Alpha;
     }
 }

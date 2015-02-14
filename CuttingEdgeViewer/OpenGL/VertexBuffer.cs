@@ -6,7 +6,11 @@ namespace CuttingEdge
 {
     public class VertexBuffer<VertexT> : Disposable where VertexT : struct
     {
-        public VertexBuffer(VertexT[] vertices)
+        public VertexBuffer(VertexT[] vertices) : this()
+        {
+            Update(vertices);
+        }
+        public VertexBuffer()
         {
             ID = GL.GenBuffer();
         }
@@ -32,6 +36,7 @@ namespace CuttingEdge
         {
             Bind();
             if (count == -1) count = vertices.Length;
+            this.count = count;
             if (count > capacity)
             {
                 capacity = count;
@@ -44,6 +49,11 @@ namespace CuttingEdge
         }
         int count;
         int capacity;
+
+        public void DrawTriangles()
+        {
+            GL.DrawArrays(PrimitiveType.Triangles, 0, count);
+        }
 
         public void DrawPoints()
         {

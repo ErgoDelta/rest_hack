@@ -24,14 +24,14 @@ namespace CuttingEdge
                 //particles[parent].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
                 particles[parent].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f, 0, 1);
 
-                particles[parent].parent = ushort.MaxValue;
+                //particles[parent].parent = ushort.MaxValue;
 
-                for (ushort c = 0; c < 200; c++)
+                for (ushort c = 0; c < 10; c++)
                 {
                     ushort c2 = (ushort)(c + Count);
                     particles[c2].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
                     //particles[c2].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f,0, 1);
-                    particles[c2].parent = parent;
+                    //particles[c2].parent = parent;
                     //particles[parent].child = c2;
                     parent = c2;
                     Count++;
@@ -73,30 +73,30 @@ namespace CuttingEdge
             float size = 0;
             for (int i = 0; i < Count; i++)
             {
-                if (particles[i].parent == ushort.MaxValue)
+                //if (particles[i].parent == ushort.MaxValue)
                 {
                     Vector4 r = elapsedTime * new Vector4((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f, 0, 0);
                     particles[i].Position = particles[i].Position + r;
                     size = 1;
                     particles[i].Position.W = size;
                 }
-                else
-                {
-                    //Vector2 xy = particles[particles[i].parent].Position.Xy - particles[i].Position.Xy;
-                    //float distance = xy.LengthFast;
+                //else
+                //{
+                //    //Vector2 xy = particles[particles[i].parent].Position.Xy - particles[i].Position.Xy;
+                //    //float distance = xy.LengthFast;
 
-                    //if (distance > 0.05f)
-                    //{
-                    //    particles[i].Position.Xy = particles[particles[i].parent].Position.Xy - xy * 0.05f;
-                    //}
-                    //else
-                    {
-                        float e = elapsedTime * 10f;
-                        particles[i].Position = (particles[i].Position + e * particles[particles[i].parent].Position) / (1.0f + e);
-                    }
-                    size *= 0.95f;
-                    particles[i].Position.W = size;
-                }
+                //    //if (distance > 0.05f)
+                //    //{
+                //    //    particles[i].Position.Xy = particles[particles[i].parent].Position.Xy - xy * 0.05f;
+                //    //}
+                //    //else
+                //    {
+                //        float e = elapsedTime * 10f;
+                //        particles[i].Position = (particles[i].Position + e * particles[particles[i].parent].Position) / (1.0f + e);
+                //    }
+                //    size *= 0.95f;
+                //    particles[i].Position.W = size;
+                //}
             }
             GL.BufferSubData<Particle>(BufferTarget.ArrayBuffer, IntPtr.Zero, (IntPtr)(Count * vertexStride), particles);
 
@@ -105,7 +105,7 @@ namespace CuttingEdge
 
             GL.Enable(EnableCap.PointSprite);
 
-            GL.PointSize(64);
+            GL.PointSize(32);
             GL.DrawArrays(PrimitiveType.Points, 0, Count);
         }
     }

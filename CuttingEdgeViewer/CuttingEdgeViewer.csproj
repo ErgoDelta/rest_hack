@@ -49,8 +49,8 @@
   <ItemGroup>
     <Compile Include="OpenGL\VertexBuffer.cs" />
     <Compile Include="OpenGL\TriangleBuffer.cs" />
-    <Compile Include="ParticleRenderer.cs" />
-    <Compile Include="Particle.cs" />
+    <Compile Include="ParticleRenderer\ParticleRenderer.cs" />
+    <Compile Include="ParticleRenderer\Particle.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="OpenGL\Mesh.cs" />
     <Compile Include="OpenGL\ShaderProgram.cs" />
@@ -58,8 +58,11 @@
     <Compile Include="Renderer\Triangle.cs" />
     <Compile Include="Renderer\Vertex.cs" />
     <Compile Include="Renderer\Renderer.cs" />
-    <Compile Include="Disposable.cs" />
+    <Compile Include="OpenGL\Disposable.cs" />
     <Compile Include="Unit.cs" />
+    <Compile Include="GUI.cs" />
+    <Compile Include="Unit\Head.cs" />
+    <Compile Include="Sprite\Sprite.cs" />
     <Compile Include="Viewer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +81,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Renderer\Texture.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprite\Sprite.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprite\Sprite.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

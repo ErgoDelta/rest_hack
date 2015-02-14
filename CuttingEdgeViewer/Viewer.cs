@@ -22,7 +22,7 @@ namespace CuttingEdge
         public static Viewer Instance;
 
         public Viewer()
-            : base(1280, 720, new GraphicsMode(new ColorFormat(32), 0, 0, 4), "Title", GameWindowFlags.Default, DisplayDevice.Default, 3, 0, GraphicsContextFlags.Default)
+        //: base(1280, 720, new GraphicsMode(new ColorFormat(32), 0, 0, 4), "Title", GameWindowFlags.Default, DisplayDevice.Default, 3, 0, GraphicsContextFlags.Default)
         {
             string jsonString = File.ReadAllText("map_one.json");
             Map map = SimpleJson.DeserializeObject<Map>(jsonString);
@@ -44,12 +44,29 @@ namespace CuttingEdge
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             ParticleRenderer = new ParticleRenderer();
+            unitRenderer = new UnitRenderer();
+
+            for (int i = 0; i < 20; i++)
+            {
+                Head head = new Head();
+                UnitRenderer.heads.Add(head);
+                for (int j = 0; j < 19; j++)
+                {
+                    Segment segement = new Segment();
+                    head.AddSegement(segement);
+                    UnitRenderer.segments.Add(segement);
+                }
+            }
+
+            base.OnLoad(e);
         }
         List<Unit> units = new List<Unit>();
         ParticleRenderer ParticleRenderer;
+        UnitRenderer unitRenderer;
 
         protected override void OnUnload(EventArgs e)
         {
+            base.OnUnload(e);
         }
 
         protected override void OnResize(EventArgs e)
@@ -70,8 +87,10 @@ namespace CuttingEdge
             //    unit.Draw();
             //}
 
-            ParticleRenderer.Draw((float)e.Time);
+            //ParticleRenderer.Draw((float)e.Time);
 
+            unitRenderer.Update((float)e.Time);
+            unitRenderer.Draw();
             SwapBuffers();
         }
 
