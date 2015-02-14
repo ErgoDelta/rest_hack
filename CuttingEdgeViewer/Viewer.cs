@@ -22,7 +22,7 @@ namespace CuttingEdge
         public static Viewer Instance;
 
         public Viewer()
-        //: base(1280, 720, new GraphicsMode(new ColorFormat(32), 0, 0, 4), "Title", GameWindowFlags.Default, DisplayDevice.Default, 3, 0, GraphicsContextFlags.Default)
+        : base(1024, 768, new GraphicsMode(new ColorFormat(32), 0, 0, 4), "Title", GameWindowFlags.Default, DisplayDevice.Default, 3, 0, GraphicsContextFlags.Default)
         {
             Location = new System.Drawing.Point(0, 0);
             WindowState = OpenTK.WindowState.Maximized;
@@ -48,16 +48,25 @@ namespace CuttingEdge
             ParticleRenderer = new ParticleRenderer();
             unitRenderer = new UnitRenderer();
 
-            for (int i = 0; i < 20; i++)
+            for (int l = 0; l < 9; l++)
             {
-                Head head = new Head();
-                UnitRenderer.heads.Add(head);
-                for (int j = 0; j < 30; j++)
+            for (int k = 0; k < 9; k++)
+            {
+
+                for (int i = 0; i < 20; i++)
                 {
-                    Segment segement = new Segment();
-                    head.AddSegement(segement);
-                    UnitRenderer.segments.Add(segement);
+                    Head head = new Head();
+                    //head.targetNode = new Vector3(50, (768) / 9 * k + (768) / 18, 0);
+                    head.targetNode = new Vector3((768) / 9 * l + (768) / 18, (768) / 9 * k + (768) / 18, 0);
+                    UnitRenderer.heads.Add(head);
+                    for (int j = 0; j < 10; j++)
+                    {
+                        Segment segement = new Segment();
+                        head.AddSegement(segement);
+                        UnitRenderer.segments.Add(segement);
+                    }
                 }
+            }
             }
 
             base.OnLoad(e);

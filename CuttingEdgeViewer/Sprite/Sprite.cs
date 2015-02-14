@@ -42,7 +42,9 @@ namespace CuttingEdge
             GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, Marshal.SizeOf(typeof(Vertex)), 2 * 4);
 
             viewMatrixLocation = GL.GetUniformLocation(shaderProgram.ID, "ViewMatrix");
-            Matrix4 viewMatrix = Matrix4.CreateOrthographicOffCenter(0, Viewer.Instance.Width, 0, Viewer.Instance.Height, -1, 1);
+            float screenHeight = 768;
+            float screenWidth = screenHeight / Viewer.Instance.Height * Viewer.Instance.Width;
+            Matrix4 viewMatrix = Matrix4.CreateOrthographicOffCenter(0, screenWidth, 0, screenHeight, -1, 1);
             shaderProgram.SetMatrix(viewMatrixLocation, viewMatrix);
 
             modelMatrixLocation = GL.GetUniformLocation(shaderProgram.ID, "ModelMatrix");
@@ -51,7 +53,10 @@ namespace CuttingEdge
         }
         static void Instance_Resize(object sender, System.EventArgs e)
         {
-            Matrix4 viewMatrix = Matrix4.CreateOrthographicOffCenter(0, Viewer.Instance.Width, 0, Viewer.Instance.Height, -1, 1);
+            float screenHeight = 768;
+            float screenWidth = screenHeight / Viewer.Instance.Height * Viewer.Instance.Width;
+
+            Matrix4 viewMatrix = Matrix4.CreateOrthographicOffCenter(0, screenWidth, 0, screenHeight, -1, 1);
             shaderProgram.SetMatrix(viewMatrixLocation, viewMatrix);
         }
         static int viewMatrixLocation;

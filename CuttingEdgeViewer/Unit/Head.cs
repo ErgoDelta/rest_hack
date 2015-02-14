@@ -22,7 +22,7 @@ namespace CuttingEdge
             current.NextSegment = segment;
         }
 
-        Vector3 targetNode = new Vector3(600, 300, 0);
+        public Vector3 targetNode = new Vector3(50, 50, 0);
         Vector3 target = new Vector3(600, 300, 0);
 
         float TargetRotation;
@@ -51,7 +51,7 @@ namespace CuttingEdge
             {
                 Vector3 randomDirection = new Vector3(((float)random.NextDouble()) - 0.5f, ((float)random.NextDouble()) - 0.5f, 0);
                 randomDirection.NormalizeFast();
-                target = targetNode + randomDirection * 400;
+                target = targetNode + randomDirection * 30;
             }
             direction2 = target - Position;
             direction2.NormalizeFast();
@@ -65,7 +65,7 @@ namespace CuttingEdge
             Rotation = Rotation * (1 - elapsedTime*2) + TargetRotation * elapsedTime*2;
 
             Position += direction2 * elapsedTime * 20;
-            Size = 32;
+            Size = 12;
 
 
             float size = Size * 0.75f;
@@ -77,7 +77,7 @@ namespace CuttingEdge
             Segment current = NextSegment;
             while (current != null)
             {
-                size *= 0.95f;
+                size *= 0.9f;
 
 
                 current.targetSize = size;
