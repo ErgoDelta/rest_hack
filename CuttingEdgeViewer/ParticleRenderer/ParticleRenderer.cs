@@ -7,6 +7,7 @@ namespace CuttingEdge
 {
     public class ParticleRenderer
     {
+        VertexBuffer<Particle> vertexBuffer;
         const ushort maxCount = ushort.MaxValue;
 
         Particle[] particles = new Particle[maxCount];
@@ -23,13 +24,16 @@ namespace CuttingEdge
                 ushort parent = Count++;
                 //particles[parent].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
                 particles[parent].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f, 0, 1);
+                particles[parent].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f, 0, 1);
 
+                particles[parent].Position.Xyz *= 2;
                 //particles[parent].parent = ushort.MaxValue;
 
-                for (ushort c = 0; c < 10; c++)
+                for (ushort c = 0; c < 100; c++)
                 {
                     ushort c2 = (ushort)(c + Count);
-                    particles[c2].Position = new Vector4(0, 0, 0, random.Next(1000) / 1000.0f * 0.5f);
+                    particles[c2].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f, 0, random.Next(1000) / 1000.0f * 0.5f);
+                    particles[c2].Position.Xyz *= 2;
                     //particles[c2].Position = new Vector4(random.Next(1000) / 1000.0f - 0.5f, random.Next(1000) / 1000.0f - 0.5f,0, 1);
                     //particles[c2].parent = parent;
                     //particles[parent].child = c2;
@@ -46,9 +50,9 @@ namespace CuttingEdge
             //    Count++;
             //}
 
-            GL.GenBuffers(1, out vertexBufferID);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferID);
-            GL.BufferData<Particle>(BufferTarget.ArrayBuffer, (IntPtr)(Count * vertexStride), particles, BufferUsageHint.StaticDraw);
+            vertexBuffer = new VertexBuffer<Particle>(particles);
+            vertexBuffer.Update(particles, Count);
+            vertexBuffer.Bind();
 
             shaderProgram = new ShaderProgram(@"ParticleRenderer\Particle.vert", @"ParticleRenderer\Particle.frag");
             shaderProgram.UseProgram();
@@ -60,25 +64,18 @@ namespace CuttingEdge
             GL.EnableVertexAttribArray(positionLocation);
             GL.VertexAttribPointer(positionLocation, 4, VertexAttribPointerType.Float, false, vertexStride, 0);
         }
-        int vertexBufferID;
 
         public void Draw(float elapsedTime)
         {
-            shaderProgram.UseProgram();
-            texture.Bind();
-
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferID);
             float size = 0;
             for (int i = 0; i < Count; i++)
             {
                 //if (particles[i].parent == ushort.MaxValue)
                 {
-                    Vector4 r = elapsedTime * new Vector4((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f, 0, 0);
-                    particles[i].Position = particles[i].Position + r;
-                    size = 1;
-                    particles[i].Position.W = size;
+                    Vector4 r = elapsedTime / 16 * new Vector4((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f, 0, 0);
+                    particles[i].Position.Xyz = particles[i].Position.Xyz + r.Xyz;
+                    //size = 0.2f;
+                    //particles[i].Position.W = size;
                 }
                 //else
                 //{
@@ -98,15 +95,20 @@ namespace CuttingEdge
                 //    particles[i].Position.W = size;
                 //}
             }
-            GL.BufferSubData<Particle>(BufferTarget.ArrayBuffer, IntPtr.Zero, (IntPtr)(Count * vertexStride), particles);
+            shaderProgram.UseProgram();
+            texture.Bind();
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+            vertexBuffer.Update(particles, Count);
+            int positionLocation = GL.GetAttribLocation(shaderProgram.ID, "position");
+            GL.EnableVertexAttribArray(positionLocation);
+            GL.VertexAttribPointer(positionLocation, 4, VertexAttribPointerType.Float, false, vertexStride, 0);
 
-            //glPointSize(whatever);              //specify size of points in pixels
-            //glDrawArrays(GL_POINTS, 0, count);  //draw the points
 
             GL.Enable(EnableCap.PointSprite);
-
-            GL.PointSize(32);
-            GL.DrawArrays(PrimitiveType.Points, 0, Count);
+            GL.PointSize(3);
+            //GL.DisableVertexAttribArray();
+            vertexBuffer.DrawPoints();
+            GL.Disable(EnableCap.PointSprite);
         }
     }
 }

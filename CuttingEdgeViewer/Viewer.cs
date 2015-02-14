@@ -24,6 +24,8 @@ namespace CuttingEdge
         public Viewer()
         //: base(1280, 720, new GraphicsMode(new ColorFormat(32), 0, 0, 4), "Title", GameWindowFlags.Default, DisplayDevice.Default, 3, 0, GraphicsContextFlags.Default)
         {
+            Location = new System.Drawing.Point(0, 0);
+            WindowState = OpenTK.WindowState.Maximized;
             string jsonString = File.ReadAllText("map_one.json");
             Map map = SimpleJson.DeserializeObject<Map>(jsonString);
             map = null;
@@ -50,7 +52,7 @@ namespace CuttingEdge
             {
                 Head head = new Head();
                 UnitRenderer.heads.Add(head);
-                for (int j = 0; j < 19; j++)
+                for (int j = 0; j < 30; j++)
                 {
                     Segment segement = new Segment();
                     head.AddSegement(segement);
@@ -87,7 +89,7 @@ namespace CuttingEdge
             //    unit.Draw();
             //}
 
-            //ParticleRenderer.Draw((float)e.Time);
+            ParticleRenderer.Draw((float)e.Time);
 
             unitRenderer.Update((float)e.Time);
             unitRenderer.Draw();

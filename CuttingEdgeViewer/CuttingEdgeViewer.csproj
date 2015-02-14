@@ -61,6 +61,7 @@
     <Compile Include="OpenGL\Disposable.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="Unit\UnitRenderer.cs" />
     <Compile Include="Unit\Head.cs" />
     <Compile Include="Sprite\Sprite.cs" />
     <Compile Include="Viewer.cs" />

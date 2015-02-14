@@ -24,11 +24,11 @@ namespace CuttingEdge
 
         public void Bind()
         {
-            if (boundArrayBuffer == ID) return;
+           // if (boundArrayBuffer == ID) return;
             GL.BindBuffer(BufferTarget.ArrayBuffer, ID);
-            boundArrayBuffer = ID;
+           // boundArrayBuffer = ID;
         }
-        static int boundArrayBuffer = 0;
+        //static int boundArrayBuffer = 0;
 
         static int vertexStride = Marshal.SizeOf(typeof(VertexT));
 

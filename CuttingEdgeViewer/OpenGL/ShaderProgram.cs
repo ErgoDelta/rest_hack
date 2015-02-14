@@ -30,8 +30,6 @@ namespace CuttingEdge
             GL.LinkProgram(ID);
             GL.GetProgram(ID, GetProgramParameterName.LinkStatus, out status);
             Debug.Assert(status == 1, "Shader Program Error: " + vertexShaderName + " " + fragmentShaderName, GL.GetProgramInfoLog(ID));
-
-            UseProgram();
         }
         public readonly int ID;
 

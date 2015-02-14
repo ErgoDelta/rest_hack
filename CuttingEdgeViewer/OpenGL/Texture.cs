@@ -72,14 +72,14 @@ namespace CuttingEdge
 
         public void Bind()
         {
-            if (boundTexture != this)
-            {
-                boundTexture = this;
+            //if (boundTexture != this)
+            //{
+            //    boundTexture = this;
                 GL.ActiveTexture(TextureUnit.Texture0 + 0);
                 GL.BindTexture(TextureTarget.Texture2D, textureID);
-            }
+            //}
         }
-        static Texture boundTexture;
+        //static Texture boundTexture;
 
         public void FixBitmap(Bitmap bitmap)
         {
