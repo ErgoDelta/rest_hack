@@ -98,10 +98,13 @@ namespace CuttingEdge
             //    unit.Draw();
             //}
 
-            ParticleRenderer.Draw((float)e.Time);
+            if (showBackground)
+            {
+                ParticleRenderer.Draw((float)e.Time);
+            }
 
             unitRenderer.Update((float)e.Time);
-            unitRenderer.Draw();
+            unitRenderer.Draw(showUnitBodies);
             SwapBuffers();
         }
 
@@ -118,11 +121,21 @@ namespace CuttingEdge
             }
         }
 
+        bool showUnitBodies = true;
+        bool showBackground = true;
+
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.F:
+                case Key.F1: showBackground = !showBackground; break;
+                case Key.F2: showUnitBodies = !showUnitBodies; break;
+
+                case Key.F4:
+                    if( e.Alt)
+                    {
+                        Close();
+                    }
                     break;
 
                 case Key.C:

@@ -22,7 +22,7 @@ namespace CuttingEdge
             }
         }
 
-        public void Draw()
+        public void Draw(bool showUnitBodies)
         {
             Sprite.shaderProgram.UseProgram();
             Sprite.vertexBuffer.Bind();
@@ -48,11 +48,14 @@ namespace CuttingEdge
                 Sprite.Draw(ref modelMatrix);
             }
 
-            segementTexture.Bind();
-            foreach (Segment segment in segments)
+            if (showUnitBodies)
             {
-                segment.GetModelMatrix(out modelMatrix);
-                Sprite.Draw(ref modelMatrix);
+                segementTexture.Bind();
+                foreach (Segment segment in segments)
+                {
+                    segment.GetModelMatrix(out modelMatrix);
+                    Sprite.Draw(ref modelMatrix);
+                }
             }
         }
     }
