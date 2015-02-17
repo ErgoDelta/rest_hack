@@ -18,16 +18,16 @@ def process_move(gameboard, moves_requested):
     # note: moves are validated in the loops below
     moves = json.loads(moves_requested)
 
-    result_board = {'nodes': ()}
-    result_moves_processed   = {'moves': ()}
-    result_moves_with_errors = {'moves': ()}
+    result_board = board
+    result_moves_processed = {'moves': []}
+    result_moves_with_errors = {'moves': []}
 
     for move in moves['moves']:
-        print "processing move..."
-        print "node_from : {0}".format(move['node_from'])
-        print "node_to : {0}".format(move['node_to'])
-        print "owner : {0}".format(move['owner'])
-        print "points : {0}".format(move['points'])
+        # print "processing move..."
+        # print "node_from : {0}".format(move['node_from'])
+        # print "node_to : {0}".format(move['node_to'])
+        # print "owner : {0}".format(move['owner'])
+        # print "points : {0}".format(move['points'])
 
         node_from_id = move['node_from']
         node_to_id = move['node_to']
@@ -42,11 +42,11 @@ def process_move(gameboard, moves_requested):
                 to_node = node
 
         if from_node and to_node:
-            print "move from-to path OK"
-            result_moves_processed['moves'].add(move)
+            # print "move from-to path OK"
+            result_moves_processed['moves'].append(move)
         else:
-            print "invalid path: {0}-{1}".format(node_from_id, node_to_id)
-            result_moves_with_errors['moves'].add(move)
+            # print "invalid path: {0}-{1}".format(node_from_id, node_to_id)
+            result_moves_with_errors['moves'].append(move)
 
     # TODO: actually process the moves and make a result_board
 
