@@ -2,28 +2,32 @@
 
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+    <h1>WELCOME</h1>
+    <h2>TO</h2>
+    <h3>THE</h3>
+    <h1>THUNDERDOME</h1>
+    <h3>Four Hack-Bots Enter... One Hack-Bot Leaves!</h3>
+    <img src="assets/images/yeoman.png" alt="I am Yeoman">
+    <p class="lead">I will be your host today. You may call me Mr. Yeoman.</p>
   </div>
 </header>
 
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
+      <h1 class="page-header">Current Games</h1>
+      <ul class="nav nav-tabs nav-stacked" ng-repeat="game in games">
+        <li ng-click="viewGame(game._id)"><a href="#" tooltip="{{game.info}}">{{game.name}}<button type="button" ng-show="isAdmin()" class="close" ng-click="deleteGame(game)">&times;</button></a></li>
       </ul>
     </div>
   </div>
 
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
+  <form ng-show="isAdmin()" class="game-form">
+    <label>Create a New Game</label>
     <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
+      <input type="text" class="form-control" placeholder="Add a new game here." ng-model="newGame">
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
+        <button type="submit" class="btn btn-primary" ng-click="addGame()">Add New Game</button>
       </span>
     </p>
   </form>
