@@ -17,7 +17,7 @@
     <div class="col-lg-12">
       <h1 class="page-header">Current Games</h1>
       <ul class="nav nav-tabs nav-stacked" ng-repeat="game in games">
-        <li ng-click="viewGame(game._id)"><a href="#" tooltip="{{game.info}}">{{game.name}}<button type="button" ng-show="isAdmin()" class="close" ng-click="deleteGame(game)">&times;</button></a></li>
+        <li><a ng-click="viewGame(game)" tooltip="{{game.info}}">{{game.name}}<button type="button" ng-show="isAdmin()" class="close" ng-click="deleteGame(game)">&times;</button></a></li>
       </ul>
     </div>
   </div>

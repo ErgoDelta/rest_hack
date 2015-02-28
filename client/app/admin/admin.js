@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('restHackApp')
+angular
+  .module('restHackApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('admin', {

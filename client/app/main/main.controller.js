@@ -10,8 +10,8 @@ angular.module('restHackApp')
       socket.syncUpdates('game', $scope.games);
     });
 
-    $scope.viewGame = function(gameId) {
-      $state.go('game.view', {id:gameId})
+    $scope.viewGame = function(game) {
+      $state.go('gameView', {id:game._id})
     };
 
     $scope.addGame = function() {
