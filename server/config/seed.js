@@ -11,19 +11,103 @@ var User = require('../api/user/user.model');
 Game.find({}).remove(function() {
   Game.create({
     name : 'First Blood',
-    info : 'This is the first game you will face!'
+    info : 'This is the first game you will face!',
+    world : {
+      "nodes" : [
+        {
+          "id" : 1,
+          "owner" : "player_1",
+          "points" : "100",
+          "connections" : [
+          5
+          ],
+          "starting_node" : "player_1"
+        },
+        {
+          "id" : 2,
+          "owner" : "player_2",
+          "points" : "100",
+          "connections" : [
+          6
+          ],
+          "starting_node" : "player_2"
+        },
+        {
+          "id" : 3,
+          "owner" : "player_3",
+          "points" : "100",
+          "connections" : [
+          7
+          ],
+          "starting_node" : "player_3"
+        },
+        {
+          "id" : 4,
+          "owner" : "player_4",
+          "points" : "100",
+          "connections" : [
+          8
+          ],
+          "starting_node" : "player_4"
+        },
+        {
+          "id" : 5,
+          "owner" : "none",
+          "points" : "0",
+          "connections" : [
+          1,
+          6,
+          7
+          ]
+        },
+        {
+          "id" : 6,
+          "owner" : "none",
+          "points" : "0",
+          "connections" : [
+          2,
+          5,
+          7
+          ]
+        },
+        {
+          "id" : 7,
+          "owner" : "none",
+          "points" : "0",
+          "connections" : [
+          3,
+          6,
+          8
+          ]
+        },
+        {
+          "id" : 8,
+          "owner" : "none",
+          "points" : "0",
+          "connections" : [
+          4,
+          6,
+          7
+          ]
+        }
+      ]
+    }
   }, {
     name : 'Mad Max',
-    info : '...'
+    info : '...',
+    world : {}
   }, {
     name : 'Mad Max 2',
-    info : '...'
+    info : '...',
+    world : {}
   }, {
     name : 'Mad Max Beyond Thunderdome',
-    info : '...'
+    info : '...',
+    world : {}
   }, {
     name : 'Mad Max: Fury Road',
-    info : 'What awaits behind door number two?'
+    info : '...',
+    world : {}
   });
 });
 

@@ -5,74 +5,53 @@
 */
 angular
   .module('restHackApp')
-  .directive("game", function(){
-  return {
-    restrict: "A",
-    link: function(scope, element){
-      var ctx = element[0].getContext('2d');
+  .directive("game",
+    function() {
+      return {
+        restrict: "EA",
+        scope: { game: '=' },
+        link: function(scope, element, attr) {
+          var canvas = document.getElementById('game_canvas'),
+              context = canvas.getContext('2d');
 
-      // variable that decides if something should be drawn on mousemove
-      var drawing = false;
+          function renderNode(node) {
+            console.log(node);
+            var centerX = 0,
+                centerY = 0,
+                radius = 20;
 
-      // the last coordinates before the current move
-      var lastX;
-      var lastY;
-      var currentX;
-      var currentY;
+            context.beginPath();
+            context.fillStyle = "black";
+            //context.arc(0 + (node.id * 2), 0 + (node.id * 2), radius, 0, Math.PI*2, true);
+            context.rect(0 + (node.id * 2), 0 + (node.id * 2), 5, 5);
+            //context.lineWidth = 5;
+            //context.strokeStyle = '#003300';
+            context.closePath();
+            context.fill();
 
-      element.bind('mousedown', function(event){
-        if(event.offsetX!==undefined){
-          lastX = event.offsetX;
-          lastY = event.offsetY;
-        } else { // Firefox compatibility
-          lastX = event.layerX - event.currentTarget.offsetLeft;
-          lastY = event.layerY - event.currentTarget.offsetTop;
-        }
-
-        // begins new line
-        ctx.beginPath();
-
-        drawing = true;
-      });
-      element.bind('mousemove', function(event){
-        if(drawing){
-          // get current mouse position
-          if(event.offsetX!==undefined){
-            currentX = event.offsetX;
-            currentY = event.offsetY;
-          } else {
-            currentX = event.layerX - event.currentTarget.offsetLeft;
-            currentY = event.layerY - event.currentTarget.offsetTop;
+            context.beginPath();
+            context.fillStyle = "red";
+            //context.arc(5 + (node.id), 5 + (node.id), radius * 2, 0, Math.PI*2, true);
+            context.rect(5 + (node.id * 2), 5 + (node.id * 2), 10, 10);
+            context.lineWidth = 4;
+            //context.strokeStyle = '#003300';
+            //context.closePath();
+            context.fill();
+            console.log('render');
           }
 
-          draw(lastX, lastY, currentX, currentY);
-
-          // set current coordinates to last one
-          lastX = currentX;
-          lastY = currentY;
-        }
-
-      });
-      element.bind('mouseup', function(event){
-        // stop drawing
-        drawing = false;
-      });
-
-      // canvas reset
-      function reset(){
-        element[0].width = element[0].width;
-      }
-
-      function draw(lX, lY, cX, cY){
-        // line from
-        ctx.moveTo(lX,lY);
-        // to
-        ctx.lineTo(cX,cY);
-        // color
-        ctx.strokeStyle = "#4bf";
-        // draw it
-        ctx.stroke();
+          scope.$watch("game", function(newValue, oldValue) {
+            if(scope.game) {
+              console.log(scope.game);
+              console.log(scope.game.world);
+              console.log(scope.game.world.nodes);
+              for (var node in scope.game.world.nodes) {
+                renderNode(node);
+              }
+            }
+            console.log(element);
+            console.log(context);
+          }, true);
       }
     }
-  };
-});
+  });
