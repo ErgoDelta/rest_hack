@@ -8,5 +8,10 @@ angular
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('leaderboard', {
+          url: '/Leaderboard',
+          templateUrl: 'app/leaderboard/leaderboard.html',
+          controller: 'LeaderboardCtrl'
       });
   });

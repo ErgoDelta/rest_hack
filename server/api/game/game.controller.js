@@ -55,13 +55,13 @@ exports.update = function(req, res) {
 exports.destroy = function(req, res) {
   Game.findById(req.params.id, function (err, game) {
     if(err) { return handleError(res, err); }
-      if(!game) { return res.send(404); }
-        game.remove(function(err) {
-          if(err) { return handleError(res, err); }
-            return res.send(204);
-          });
-        });
-      };
+    if(!game) { return res.send(404); }
+    game.remove(function(err) {
+      if(err) { return handleError(res, err); }
+        return res.send(204);
+      });
+    });
+  };
 
 function handleError(res, err) {
   return res.send(500, err);

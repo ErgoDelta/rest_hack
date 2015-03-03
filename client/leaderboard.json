@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Brad",
+        "gamesPlayed": 33,
+        "gamesWon": 20
+    },
+    {
+        "name": "James",
+        "gamesPlayed": 65,
+        "gamesWon": 12
+    },
+    {
+        "name": "Payden",
+        "gamesPlayed": 45,
+        "gamesWon": 23
+    },
+    {
+        "name": "Anthony",
+        "gamesPlayed": 49,
+        "gamesWon": 13
+    }
+]

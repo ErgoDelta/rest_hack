@@ -3,8 +3,12 @@
 angular.module('restHackApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
+        'title': 'Home',
+        'link': '/'
+    },
+    {
+        'title': "Leaderboard",
+        'link': '/Leaderboard'
     }];
 
     $scope.isCollapsed = true;

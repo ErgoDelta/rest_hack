@@ -1,0 +1,22 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div ng-controller="LeaderboardCtrl as leaderBoard">
+    <table class="table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Games Played</th>
+                <th>Games Won</th>
+                <th>Winning %</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="x in leaderBoard.players | orderBy:'-winningPercentage'">
+            <tr>
+                <td>{{x.name}}</td>
+                <td>{{x.gamesPlayed}}</td>
+                <td>{{x.gamesWon}}</td>
+                <td>{{x.winningPercentage | number:3}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
