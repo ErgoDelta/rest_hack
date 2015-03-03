@@ -11,6 +11,7 @@ module.exports = function(app) {
   // Insert routes below
   app.use('/api/games', require('./api/game'));
   app.use('/api/users', require('./api/user'));
+  app.use('/api/commands', require('./api/command'));
 
   app.use('/auth', require('./auth'));
 
