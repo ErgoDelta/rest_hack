@@ -7,6 +7,7 @@
 
 var Game = require('../api/game/game.model');
 var User = require('../api/user/user.model');
+var Leaderboard = require('../api/leaderboard/leaderboard.model');
 
 Game.find({}).remove(function() {
   Game.create({
@@ -127,4 +128,32 @@ User.find({}).remove(function() {
       console.log('finished populating users');
     }
   );
+});
+
+Leaderboard.find({}).remove(function() {
+  Leaderboard.create({
+    teamName: 'James',
+    gamesPlayed: 40,
+    gamesWon: 20
+  }, {
+    teamName: 'Brad',
+    gamesPlayed: 67,
+    gamesWon: 34
+  },{
+    teamName: 'Payden',
+    gamesPlayed: 46,
+    gamesWon: 11
+  }, {
+    teamName: 'Anthony',
+    gamesPlayed: 39,
+    gamesWon: 29
+  }, {
+    teamName: 'Kirk',
+    gamesPlayed: 56,
+    gamesWon: 12
+  }, {
+    teamName: 'Chris',
+    gamesPlayed: 76,
+    gamesWon: 19
+  })
 });

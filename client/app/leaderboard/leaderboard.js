@@ -3,7 +3,7 @@ angular.module('restHackApp')
         var leaderboard = this;
         leaderboard.players = []
 
-        $http.get('/leaderboard.json').success(function (data) {
+        $http.get('/api/leaderboard').success(function (data) {
             leaderboard.players = data;
             for (i = 0; i < leaderboard.players.length; i++) {
                 //Calculate the winning percentage for each team.
