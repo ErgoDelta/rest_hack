@@ -14,20 +14,25 @@ angular
           var canvas = document.getElementById('game_canvas'),
               context = canvas.getContext('2d');
 
-          function renderNode(node) {
-            for (var i = node.id * 2; i <= node.id * 10; i = i + 5) {
-              context.beginPath();
-              context.moveTo(i, 0);
-              context.lineTo(i, 1000);
-              context.stroke();
+          function renderNode(nodes) {
+            var maxPerRow = Math.sqrt(nodes.length);
+            var startingX = (canvas.width / maxPerRow) / 2;
+            var startingY = (canvas.height / maxPerRow) / 2;
+
+            for (var y = 0; y < maxPerRow; y++) {
+              for (var x = 0; x < maxPerRow; x++) {
+                context.arc(startingX, startingY,20,0,2*Math.PI);
+                context.stroke();
+                startingX += (canvas.width / maxPerRow);
+              }
+            startingY += (canvas.height / maxPerRow);
+            startingX = (canvas.width / maxPerRow) / 2;
             }
           }
 
           scope.$watch("game", function(newValue, oldValue) {
             if(scope.game) {
-              for (var node in scope.game.world.nodes) {
-                renderNode(scope.game.world.nodes[node]);
-              }
+              renderNode(scope.game.world.nodes);
             }
           }, true);
       }

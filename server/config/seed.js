@@ -16,11 +16,24 @@ Game.find({}).remove(function() {
     world : {
       "nodes" : [
         {
+          "id" : 0,
+          "owner" : "player_1",
+          "points" : "100",
+          "connections" : [
+          1,
+          3,
+          4
+          ],
+        },
+        {
           "id" : 1,
           "owner" : "player_1",
           "points" : "100",
           "connections" : [
-          5
+          5,
+          2,
+          3,
+          0
           ],
           "starting_node" : "player_1"
         },
@@ -29,7 +42,8 @@ Game.find({}).remove(function() {
           "owner" : "player_2",
           "points" : "100",
           "connections" : [
-          6
+          1,
+          5
           ],
           "starting_node" : "player_2"
         },
@@ -38,7 +52,9 @@ Game.find({}).remove(function() {
           "owner" : "player_3",
           "points" : "100",
           "connections" : [
-          7
+          7,
+          1,
+          0
           ],
           "starting_node" : "player_3"
         },
@@ -47,7 +63,9 @@ Game.find({}).remove(function() {
           "owner" : "player_4",
           "points" : "100",
           "connections" : [
-          8
+          6,
+          8,
+          0
           ],
           "starting_node" : "player_4"
         },
@@ -58,7 +76,8 @@ Game.find({}).remove(function() {
           "connections" : [
           1,
           6,
-          7
+          7,
+          2
           ]
         },
         {
@@ -66,7 +85,7 @@ Game.find({}).remove(function() {
           "owner" : "none",
           "points" : "0",
           "connections" : [
-          2,
+          4,
           5,
           7
           ]
