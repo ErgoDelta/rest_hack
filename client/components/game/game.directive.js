@@ -6,86 +6,154 @@
 angular
   .module('restHackApp')
   .directive("game",
-    function() {
+    ['d3Service', '$window',function(d3Service, $window) {
       return {
         restrict: "EA",
         scope: { game: '=' },
         link: function(scope, element, attr) {
-          var canvas = document.getElementById('game_canvas'),
-              context = canvas.getContext('2d');
+          d3Service.d3().then(function(d3) {
+            scope.svg = d3.select(element[0])
+              .append('svg')
+              .attr("width", element.width())
+              .attr("height", element.width());
 
-          var colors = ["red", "blue", "green", "purple"];
-          var teamColors = { };
-          var nodeIndexes = { };
-          nodeIndexes.addIndex = function(node, x, y) {
-            if(this[node.id.toString()] == undefined)
-            {
-              this[node.id.toString()] = [x, y];
-            }
-          };
+            scope.board = scope.svg
+              .append('rect')
+              .attr('x', 0)
+              .attr('y', 0)
+              .attr('width', element.width())
+              .attr('height', element.width())
+              .attr('fill', 'black');
 
-          function renderNode(nodes) {
-            var maxPerRow = Math.sqrt(nodes.length);
-            var startingX = (canvas.width / maxPerRow) / 2;
-            var startingY = (canvas.height / maxPerRow) / 2;
+            scope.gameText = scope.svg
+              .append('text')
+              .attr('x', 20)
+              .attr('y', 80)
+              .attr('font-size', '60px')
+              .attr('fill', 'white');
 
-            if (canvas.width < canvas.height) { var radius = (canvas.width / maxPerRow) * .333; }
-            else { var radius = (canvas.height / maxPerRow) * .333; }
 
-            var index = 0;
-            for (var y = 0; y < maxPerRow; y++) {
-              for (var x = 0; x < maxPerRow; x++) {
-                nodeIndexes.addIndex(nodes[index], startingX, startingY);
-                context.beginPath();
-                context.arc(startingX, startingY, radius,0,2*Math.PI);
-                context.fillStyle = getNodeColor(nodes[index]);
-                context.fill();
-                context.stroke();
-                startingX += (canvas.width / maxPerRow);
-                index++;
+            // Browser onresize event
+            window.onresize = function() {
+              scope.$apply();
+            };
+
+            // Watch for resize event
+            scope.$watch(function() {
+              return angular.element($window)[0].innerWidth;
+            }, function() {
+              scope.render(scope.data);
+            });
+
+            scope.$watch("game", function(newValue, oldValue) {
+              if(scope.game) {
+                if(!scope.bootStrapped){
+                  scope.bootStrapBoard();
+                  scope.bootStrapped = true;
+                }
+                scope.render(scope.data);
               }
-            startingY += (canvas.height / maxPerRow);
-            startingX = (canvas.width / maxPerRow) / 2;
-            }
-          }
+            }, true);
 
-          function getNodeColor(node)
-          {
-            console.log(node.id);
-            if (node.owner == "none")
-            {
-              return "white";
-            }
-            else
-            {
-              if (teamColors[node.owner] == undefined)
-              {
-                teamColors[node.owner] = colors.shift();
+            scope.bootStrapBoard = function(){
+              scope.nodes = [];
+              scope.links = [];
+
+              for(var i = 0; i <  scope.game.world.nodes.length; i++){
+                var node = scope.game.world.nodes[i];
+                for (var j = 0; j < node.connections.length; j++) {
+                  scope.links.push({source: i, target: node.connections[j] , value:1 });
+                }
+
+                scope.nodes.push(scope.game.world.nodes[i]);
+
               }
-              return teamColors[node.owner];
-            }
-          }
+              console.log(scope.links);
 
-          function buildPaths(nodes)
-          {
-            for( var nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++){
-              var node = nodes[nodeIndex];
-              for(var index = 0; index < node.connections.length; index++)
-              {
-                context.beginPath();
-                context.moveTo(nodeIndexes[node.id.toString()][0], nodeIndexes[node.id.toString()][1]);
-                context.lineTo(nodeIndexes[node.connections[index]][0], nodeIndexes[node.connections[index]][1]);
-                context.stroke();
+              var force = d3.layout.force()
+                .charge(-200)
+                .linkDistance(500)
+                .size([element.width(), element.width()]);
+
+              force
+                .nodes(scope.nodes)
+                .links(scope.links)
+                .start();
+
+              var link = scope.svg.selectAll(".link")
+                .data(scope.links)
+                .enter().append("line")
+                .attr("class", "link")
+                .style("stroke", "white")
+                .style("stroke-width", "1");
+
+              var node = scope.svg.selectAll(".node")
+                .data(scope.nodes)
+                .enter().append("circle")
+                .attr("class", "node")
+                .attr("r", 50)
+                .style("fill", "white")
+                .call(force.drag);
+
+              var padding = 125, // separation between circles
+                radius=50;
+
+              function collide(alpha) {
+                var quadtree = d3.geom.quadtree(scope.nodes);
+                return function(d) {
+                  var rb = 2*radius + padding,
+                    nx1 = d.x - rb,
+                    nx2 = d.x + rb,
+                    ny1 = d.y - rb,
+                    ny2 = d.y + rb;
+
+                  quadtree.visit(function(quad, x1, y1, x2, y2) {
+                    if (quad.point && (quad.point !== d)) {
+                      var x = d.x - quad.point.x,
+                        y = d.y - quad.point.y,
+                        l = Math.sqrt(x * x + y * y);
+                      if (l < rb) {
+                        l = (l - rb) / l * alpha;
+                        d.x -= x *= l;
+                        d.y -= y *= l;
+                        quad.point.x += x;
+                        quad.point.y += y;
+                      }
+                    }
+                    return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+                  });
+                };
               }
-            }
-          }
 
-          scope.$watch("game", function(newValue, oldValue) {
-            if(scope.game) {
-              renderNode(scope.game.world.nodes);
-              buildPaths(scope.game.world.nodes);
+              force.on("tick", function() {
+                link.attr("x1", function(d) { return d.source.x; })
+                  .attr("y1", function(d) { return d.source.y; })
+                  .attr("x2", function(d) { return d.target.x; })
+                  .attr("y2", function(d) { return d.target.y; });
+
+                node.attr("cx", function(d) { return d.x; })
+                  .attr("cy", function(d) { return d.y; });
+
+                node.each(collide(0.5)); //Added
+              });
+
+
+
+            };
+
+            scope.render = function(data) {
+              console.log(element.width());
+              scope.gameText.text(scope.game.name);
+              scope.svg
+                .attr("width", element.width())
+                .attr("height", element.width());
+
+              scope.board
+                .attr("width", element.width())
+                .attr("height", element.width());
+
             }
-          }, true);
+          });
       }
     }
-  });
+  }]);
